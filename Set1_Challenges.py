@@ -1,3 +1,5 @@
+from math import ceil
+
 def hextobase64(hex_string):
 
     switcher = {
@@ -82,7 +84,16 @@ def detectXor(filename):
         decr_list.append(singlebyteXor(line[:-1]))
     return max(decr_list, key=lambda l: weight(l))
 
+def repeatingkeyXor(sentence,key):
+
+    tkey=((ceil(len(sentence)/len(key)))*key)[0:len(sentence)]
+
+    sent_enc="".join((hex((ord(st)))[2:]).zfill(2) for st in sentence)
+    tkey_enc="".join((hex((ord(st)))[2:]).zfill(2) for st in tkey)
+    return fixedXor(sent_enc,tkey_enc)
+
 def main():
+    """
     print("Set1 Challenges")
     hex_string1="49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d"
     print("Challenge 1: "+hextobase64(hex_string1)+"\n")
@@ -94,14 +105,18 @@ def main():
     hex_string3="1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
     print("Challenge 3: "+singlebyteXor(hex_string3)+"\n")
 
-    print("Challenge 4: "+detectXor("4.txt"))
+    print("Challenge 4: "+detectXor("4.txt"))"""
 
 
-    print("Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal")
+    str5_1="Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal"
+    str5_2="ICE"
 
-    for l in "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal":
+    print("Challenge 5: "+repeatingkeyXor(str5_1,str5_2))
 
-        for l in "ICE":
-            print(l)
+
+#    for l in "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal":
+
+    #    for l in "ICE":
+    #        print(l)
 
 if __name__ == '__main__': main()
