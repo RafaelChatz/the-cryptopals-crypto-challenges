@@ -45,7 +45,7 @@ def hextobase64(hex_string):
 
 def fixedXor(hex_string1,hex_string2):
     if(len(hex_string1)==len(hex_string2)):
-        return hex(int(hex_string1,16) ^ int(hex_string2,16) )[2:]
+        return (hex(int(hex_string1,16) ^ int(hex_string2,16) )[2:]).zfill(len(hex_string2))
     else:
         return -1
 
@@ -92,6 +92,11 @@ def repeatingkeyXor(sentence,key):
     tkey_enc="".join((hex((ord(st)))[2:]).zfill(2) for st in tkey)
     return fixedXor(sent_enc,tkey_enc)
 
+def hamming_distance(sent1,sent2):
+    sent1_enc="".join((hex((ord(st)))[2:]).zfill(2) for st in sent1)
+    sent2_enc="".join((hex((ord(st)))[2:]).zfill(2) for st in sent2)
+    return (bin(int(fixedXor(sent1_enc,sent2_enc),16))[2:]).count('1')
+
 def main():
     """
     print("Set1 Challenges")
@@ -105,18 +110,15 @@ def main():
     hex_string3="1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
     print("Challenge 3: "+singlebyteXor(hex_string3)+"\n")
 
-    print("Challenge 4: "+detectXor("4.txt"))"""
+    print("Challenge 4: "+detectXor("4.txt"))
 
 
     str5_1="Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal"
     str5_2="ICE"
 
-    print("Challenge 5: "+repeatingkeyXor(str5_1,str5_2))
+    print("Challenge 5: "+repeatingkeyXor(str5_1,str5_2))"""
 
-
-#    for l in "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal":
-
-    #    for l in "ICE":
-    #        print(l)
+    KEYSIZE=4
+    print(hamming_distance("this is a test","wokka wokka!!!"))
 
 if __name__ == '__main__': main()
