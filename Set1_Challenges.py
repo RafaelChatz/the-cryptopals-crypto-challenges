@@ -215,6 +215,13 @@ def break_repeatingkeyXor(data):
 
     return repeatingkeyXor_decrypt(line_hex,key)
 
+
+def AESinESBdecode(ciphertext,key):
+    if type(key) is str: key=key.encode("utf-8")
+    from Crypto.Cipher import AES
+    AEScipher = AES.new(key, AES.MODE_ECB)
+    return AEScipher.decrypt(ciphertext).decode("utf-8")
+
 def main():
 
     """
@@ -239,21 +246,19 @@ def main():
 
     print("Challenge 5: "+repeatingkeyXor(str5_1,str5_2))"""
 
-    #str5_1="Burning 'em, if you 't quick and nimbleI go when I hear bal"
-    #str5_2="ICE"
-
-    #print(repeatingkeyXor_decrypt(repeatingkeyXor(str5_1,str5_2),str5_2))
 
     file6data=""
     with open('6.txt', 'r') as myfile:
         file6data = myfile.read()
 
-    print("Challenge 6: "+ break_repeatingkeyXor(file6data))
+    print("Challenge 6: \n"+ break_repeatingkeyXor(file6data))
 
-    #print(file6data)
-    #print(data_string)
-    #print(base64tobin(data_string))
-    #print(hex(int(base64tobin(data_string)[:-1],2)))
+
+    import base64
+    with open('7.txt','r') as myfile:
+        file7data = base64.b64decode(myfile.read())
+
+    print("Challenge 7: "+AESinESBdecode(file7data,"YELLOW SUBMARINE") )
 
 
 
